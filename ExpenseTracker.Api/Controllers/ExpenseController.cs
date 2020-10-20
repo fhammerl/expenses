@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ExpenseTracker.Models;
@@ -34,6 +34,14 @@ namespace ExpenseTracker.Controllers
             {
                 return NotFound();
             }
+            return Ok(expense);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Expense expense)
+        {
+            ctx.Expenses.Add(expense);
+            await ctx.SaveChangesAsync();
             return Ok(expense);
         }
         }
