@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ExpenseTracker.Models;
 using ExpenseTracker.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseTracker.Controllers
 {
@@ -23,9 +21,21 @@ namespace ExpenseTracker.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Expense> Get()
+        public async Task<IActionResult> Get()
         {
-            return new List<Expense>();
+            return Ok(await ctx.Expenses.ToListAsync());
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var expense = await ctx.FindAsync<Expense>(id);
+            if (expense == null)
+            {
+                return NotFound();
+            }
+            return Ok(expense);
+        }
         }
     }
 }
