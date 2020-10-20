@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ExpenseTracker.Models;
@@ -58,6 +58,17 @@ namespace ExpenseTracker.Controllers
             return Ok(expense);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var expense = await ctx.FindAsync<Expense>(id);
+            if (expense == null)
+            {
+                return NotFound();
+            }
+            ctx.Expenses.Remove(expense);
+            ctx.SaveChanges();
+            return NoContent();
         }
     }
 }
