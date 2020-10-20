@@ -44,6 +44,20 @@ namespace ExpenseTracker.Controllers
             await ctx.SaveChangesAsync();
             return Ok(expense);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(Expense expense)
+        {
+            var expenseToUpdate = await ctx.FindAsync<Expense>(expense.ExpenseID);
+            if (expenseToUpdate == null)
+            {
+                return NotFound();
+            }
+            ctx.Entry(expenseToUpdate).CurrentValues.SetValues(expense);
+            ctx.SaveChanges();
+            return Ok(expense);
+        }
+
         }
     }
 }
