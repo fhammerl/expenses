@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ExpenseTracker.Models;
+using ExpenseTracker.DAL;
 
 namespace ExpenseTracker.Controllers
 {
@@ -12,11 +13,13 @@ namespace ExpenseTracker.Controllers
     [Route("[controller]")]
     public class ExpenseController : ControllerBase
     {
-        private readonly ILogger<ExpenseController> _logger;
+        private readonly ILogger<ExpenseController> logger;
+        private readonly ExpenseTrackerContext ctx;
 
-        public ExpenseController(ILogger<ExpenseController> logger)
+        public ExpenseController(ILogger<ExpenseController> logger, ExpenseTrackerContext ctx)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.ctx = ctx;
         }
 
         [HttpGet]
