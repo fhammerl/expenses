@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ExpenseService {
 
-  url = 'localhost:5000/expense' // TODO: make it configurable
+  url = 'https://localhost:5001/expense' // TODO: make it configurable
 
   constructor(private http: HttpClient) { }
 

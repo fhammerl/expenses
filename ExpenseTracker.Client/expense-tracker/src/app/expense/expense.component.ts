@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Expense } from '../shared/models/expense';
 import { ExpenseService } from '../shared/services/expense.service';
 
 @Component({
@@ -8,11 +9,10 @@ import { ExpenseService } from '../shared/services/expense.service';
 })
 export class ExpenseComponent implements OnInit {
 
+  expenses: Expense[] = []
   constructor(private expenseService: ExpenseService) { }
 
   ngOnInit(): void {
+    this.expenseService.getAll().subscribe((expenses) => this.expenses = expenses);
   }
-
-
-
 }

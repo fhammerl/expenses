@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ExpenseModule } from './expense/expense.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import { ExpenseModule } from './expense/expense.module';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     ExpenseModule
   ],
   providers: [],
