@@ -4,6 +4,7 @@ import { ExpenseComponent } from './expense.component';
 import { ExpenseService } from '../shared/services/expense.service';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { FormsModule } from '@angular/forms';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     NzTableModule,
+    NzButtonModule,
     FormsModule
   ],
   providers: [
