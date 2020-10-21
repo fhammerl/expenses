@@ -34,6 +34,12 @@ namespace ExpenseTracker
             if (env.IsDevelopment())
             {
                 services.AddDbContext<ExpenseTrackerContext>(options => options.UseSqlite($"Data Source=ExpenseTracker.Api/expensetracker.db"));
+                services.AddCors(o => o.AddPolicy("AllowAll", builder => // TODO: Restrict from 'allow all'
+                {
+                    builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                }));
             }
             services.AddSwaggerGen();
         }
@@ -59,6 +65,7 @@ namespace ExpenseTracker
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 
