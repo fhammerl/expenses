@@ -1,1 +1,37 @@
-{{expenses}}
+<button nz-button (click)="addRow()" nzType="primary">Add</button>
+<br />
+<br />
+<nz-table #editRowTable nzBordered [nzData]="expenses">
+    <thead>
+        <tr>
+            <th nzWidth="30%">Id</th>
+            <th>Amount</th>
+            <th>Currency</th>
+            <th>Recipient</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let expense of editRowTable.data" class="editable-row">
+            <ng-container
+                *ngIf="!editCache[expense.expenseID] || !editCache[expense.expenseID].edit; else editTemplate">
+                <td>{{ expense.expenseID }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.currency }}</td>
+                <td>{{ expense.recipient }}</td>
+                <td><a (click)="startEdit(expense.expenseID)">Edit</a></td>
+            </ng-container>
+            <ng-template #editTemplate>
+                <td>{{ expense.expenseID }}</td>
+                <td><input type="number" nz-input [(ngModel)]="editCache[expense.expenseID].data.amount" /></td>
+                <td><input type="number" nz-input [(ngModel)]="editCache[expense.expenseID].data.currency" /></td>
+                <td><input type="text" nz-input [(ngModel)]="editCache[expense.expenseID].data.recipient" /></td>
+                <td>
+                    <a class="action" (click)="saveEdit(expense.expenseID)">Save</a>
+                    <a class="action" (click)="cancelEdit(expense.expenseID)">Cancel</a>
+                    <a class="action" (click)="deleteRow(expense.expenseID)">Delete</a>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</nz-table>

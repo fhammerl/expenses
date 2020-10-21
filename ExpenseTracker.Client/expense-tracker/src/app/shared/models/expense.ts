@@ -1,6 +1,6 @@
 export class Expense {
     expenseID: string
-    amount: string
+    amount: number
     recipient: string
-    currency: string
+    currency: number
 }

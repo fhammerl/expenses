@@ -24,7 +24,7 @@ export class ExpenseService {
     return this.http.put<Expense>(this.url, expense);
   }
 
-  delete(expense): Observable<any> {
-    return this.http.delete(this.url, expense);
+  delete(expenseID: string): Observable<any> {
+    return this.http.delete(this.url + '/' + expenseID);
   }
 }
