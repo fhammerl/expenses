@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExpenseServiceService } from './services/expense-service.service';
+import { ExpenseService } from './services/expense.service';
 
 
 
@@ -10,7 +10,7 @@ import { ExpenseServiceService } from './services/expense-service.service';
     CommonModule
   ],
   exports: [
-    ExpenseServiceService
+    ExpenseService
   ]
 })
 export class SharedModule { }

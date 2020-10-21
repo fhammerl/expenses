@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ExpenseServiceService {
+export class ExpenseService {
 
   url = 'localhost:5000/expense' // TODO: make it configurable
 
