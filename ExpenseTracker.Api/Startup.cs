@@ -20,11 +20,10 @@ namespace ExpenseTracker
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsProduction()) // TODO: define production datacontext and cors policy
             {
                 services.AddDbContext<ExpenseTrackerContext>(options => options.UseSqlite($"Data Source=expensetracker.db"));
                 services.AddCors(o => o.AddPolicy("AllowAll", builder => // TODO: Restrict from 'allow all'
@@ -37,20 +36,15 @@ namespace ExpenseTracker
             services.AddSwaggerGen();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
                 UpdateDatabase(app);
             }
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
@@ -69,7 +63,6 @@ namespace ExpenseTracker
             });
         }
 
-        // For Dev purposes only, for prod you should probably do this from the pipeline
         private static void UpdateDatabase(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices
