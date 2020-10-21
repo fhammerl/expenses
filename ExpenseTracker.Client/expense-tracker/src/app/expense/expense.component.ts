@@ -6,11 +6,13 @@ import { ExpenseService } from '../shared/services/expense.service';
   templateUrl: './expense.component.html',
   styleUrls: ['./expense.component.css']
 })
-export class expenseComponent implements OnInit {
+export class ExpenseComponent implements OnInit {
 
   constructor(private expenseService: ExpenseService) { }
 
   ngOnInit(): void {
   }
+
+
 
 }
