@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ExpenseTracker.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace ExpenseTracker
 {
@@ -33,7 +26,7 @@ namespace ExpenseTracker
             services.AddControllers();
             if (env.IsDevelopment())
             {
-                services.AddDbContext<ExpenseTrackerContext>(options => options.UseSqlite($"Data Source=ExpenseTracker.Api/expensetracker.db"));
+                services.AddDbContext<ExpenseTrackerContext>(options => options.UseSqlite($"Data Source=expensetracker.db"));
                 services.AddCors(o => o.AddPolicy("AllowAll", builder => // TODO: Restrict from 'allow all'
                 {
                     builder.AllowAnyOrigin()
@@ -50,8 +43,9 @@ namespace ExpenseTracker
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                UpdateDatabase(app);
             }
-            
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -73,6 +67,20 @@ namespace ExpenseTracker
             {
                 endpoints.MapControllers();
             });
+        }
+
+        // For Dev purposes only, for prod you should probably do this from the pipeline
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<ExpenseTrackerContext>())
+                {
+                    context.Database.EnsureCreated();
+                }
+            }
         }
     }
 }
