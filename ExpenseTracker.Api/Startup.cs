@@ -22,6 +22,8 @@ namespace ExpenseTracker
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
+
             services.AddControllers();
             if (env.IsDevelopment() || env.IsProduction()) // TODO: define production datacontext and cors policy
             {
