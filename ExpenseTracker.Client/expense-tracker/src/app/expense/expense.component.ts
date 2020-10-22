@@ -12,6 +12,12 @@ export class ExpenseComponent implements OnInit {
   expenses: Expense[];
   editCache: { [key: string]: { edit: boolean; data: Expense } } = {};
   readonly newRecordId: string = "n/a";
+  readonly currencies = [ // TODO: find a better place for this
+    { id: 0, name: 'Eur' },
+    { id: 1, name: 'Gbp' },
+    { id: 2, name: 'Usd' },
+    { id: 3, name: 'Chf' },
+  ];
 
   constructor(private expenseService: ExpenseService) { }
 
@@ -41,7 +47,7 @@ export class ExpenseComponent implements OnInit {
     var record = this.editCache[id].data;
     delete record.expenseID;
     this.expenseService.create(record).subscribe((result) => {
-      Object.assign(this.expenses[this.expenses.length - 1] , result);
+      Object.assign(this.expenses[this.expenses.length - 1], result);
       this.updateEditCache();
     });
   }
